@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { IProduct } from "./products";
-import { runInThisContext } from "vm";
 
 @Component({
     selector: 'pm-products',
@@ -15,7 +14,10 @@ export class ProductListComponent implements OnInit{
     }
 
     constructor() {
+        this.listFilter = 't';
+        this.filteredProducts = this.listFilter ? this.perFormFilter(this.listFilter): this.products;
     }
+
     pageTitle: string = 'Product List';
     imageWidth: number = 50;
     imageMargin: number = 2;
@@ -48,8 +50,18 @@ export class ProductListComponent implements OnInit{
             productCode: "GDN-002",
             releaseDate: "March 18, 2018",
             description: "15 gallon capacity rolling garden",
-            price: 23.99,
-            starRating: 4.2,
+            price: 20,
+            starRating: 5,
+            imageUrl: "https://openclipart.org/image/300px/sv"
+        },
+        {
+            productId: 2,
+            productName: "GArden Cart",
+            productCode: "GDN-002",
+            releaseDate: "March 18, 2018",
+            description: "15 gallon capacity rolling garden",
+            price: 2,
+            starRating: 1,
             imageUrl: "https://openclipart.org/image/300px/sv"
         }   
     ];
@@ -61,5 +73,9 @@ export class ProductListComponent implements OnInit{
     perFormFilter(filterBy: string): IProduct[] {
         filterBy = filterBy.toLocaleLowerCase();
         return this.products.filter((product: IProduct) => product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
+    }
+
+    onRatingClicked(value: string): void {
+        this.products[0].starRating = 5;
     }
 }
