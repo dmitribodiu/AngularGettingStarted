@@ -10,5 +10,5 @@ export class AppComponent {
   constructor() {
   }
 
-  pageTitle: string = 'Angular: Getting Started';
+  pageTitle: string = 'React: Getting Started';
 }
