@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { IProduct } from "./products";
+import { ProductService } from "../shared/product.service";
 
 @Component({
     selector: 'pm-products',
@@ -10,12 +11,14 @@ import { IProduct } from "./products";
 export class ProductListComponent implements OnInit{
     
     ngOnInit(): void {
-        console.log('In OnInit');
+        console.log('onInit')
+        this.products = this.productService.getProducts();
+        this.filteredProducts = this.listFilter ? this.perFormFilter(this.listFilter): this.products;
     }
 
-    constructor() {
-        this.listFilter = 't';
-        this.filteredProducts = this.listFilter ? this.perFormFilter(this.listFilter): this.products;
+    constructor(private productService: ProductService) {
+        console.log('ctor')
+        this.listFilter = '';
     }
 
     pageTitle: string = 'Product List';
@@ -33,38 +36,7 @@ export class ProductListComponent implements OnInit{
     }
 
     filteredProducts: IProduct[];
-    products: IProduct[] = [
-        {
-            productId: 1,
-            productName: "GArden Cart",
-            productCode: "GDN-002",
-            releaseDate: "March 18, 2018",
-            description: "15 gallon capacity rolling garden",
-            price: 23.99,
-            starRating: 4.2,
-            imageUrl: "https://openclipart.org/image/300px/sv"
-        },
-        {
-            productId: 2,
-            productName: "GArden Cart",
-            productCode: "GDN-002",
-            releaseDate: "March 18, 2018",
-            description: "15 gallon capacity rolling garden",
-            price: 20,
-            starRating: 5,
-            imageUrl: "https://openclipart.org/image/300px/sv"
-        },
-        {
-            productId: 2,
-            productName: "GArden Cart",
-            productCode: "GDN-002",
-            releaseDate: "March 18, 2018",
-            description: "15 gallon capacity rolling garden",
-            price: 2,
-            starRating: 1,
-            imageUrl: "https://openclipart.org/image/300px/sv"
-        }   
-    ];
+    products: IProduct[] = [];
 
     toggleImage(value: string): void {
         this.showImage = !this.showImage;
